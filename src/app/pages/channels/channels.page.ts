@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonService } from 'src/app/services/common.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -13,7 +14,8 @@ export class ChannelsPage implements OnInit {
 
   groupedChannels: any[] = [];
   loading = false;
-constructor( private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService ) { }
+  welcomeMessageList: any[] = [];
+constructor( private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, private router: Router ) { }
 
   ngOnInit() {
     this.getAllChannels();
@@ -31,6 +33,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
       }))
       .subscribe({
         next: (response: any) => {
+         
           if (response.data?.length > 0) {
             this.groupedChannels = response.data
               .map((group: any[], index: number) => {
@@ -47,6 +50,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
               .filter(Boolean); // Remove null entries (i.e., empty groups)
           } else {
             this.groupedChannels = [];
+            this.getWelcomeMessageData();
           }
           this.cdr.detectChanges();
         },
@@ -58,6 +62,30 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
         },
       });
   }
+  getWelcomeMessageData() {
+    this.loader.loadingPresent();
+    this.commonService
+      .getWelcomeMessage()
+      .pipe(
+        finalize(() => this.loader.loadingDismiss())
+      )
+      .subscribe({
+        next: (response: any) => {
+          if (response?.length > 0) {
+            this.welcomeMessageList = response;
+           
+            this.cdr.detectChanges();
+          }
+        },
+        error: (error) => {
+          this.errorHandlingService.handleError(
+            error,
+            'ChannelsPage.getWelcomeMessageData'
+          );
+        },
+      });
+  }
+
   goToChannel(channel: any) {
     console.log('Navigating to channel:', channel);
     // Example: this.router.navigate(['/channel-detail', channel.id]);
@@ -65,6 +93,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
 
   onCreateChannel() {
     console.log('Create Channel button clicked');
+    this.router.navigate(['/create/channel']);
     // Example: Navigate to channel creation page
     // this.router.navigate(['/create-channel']);
   }
