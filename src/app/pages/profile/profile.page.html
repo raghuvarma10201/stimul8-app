@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-grid>
+      <ion-row class="header-section">
+        <ion-col size="auto">
+          <div class="user-profile" [routerLink]="['/home']">
+            <ion-avatar class="avatar">
+              <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-avatar>
+            <span class="user-name">Profile</span>
+          </div>
+        </ion-col>
+        <!-- <ion-col class="location" size="auto">
+          <ion-avatar class="location-icon">
+            <ion-icon name="funnel-outline"></ion-icon>
+          </ion-avatar>
+        </ion-col> -->
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="profile-content">
+  <!-- Profile Card -->
+  <div class="profile-card">
+    <ion-avatar class="profile-avatar">
+      <img src="../../assets/images/profile-icon.svg" alt="User Avatar">
+    </ion-avatar>
+    <h2>{{userData.first_name}} {{userData.last_name}}</h2>
+    <p class="role">{{ userData.role_name }}</p>
+  </div>
+
+
+  <!-- Save and Logout Buttons -->
+  <div class="buttons">
+    <!-- <ion-button expand="full" color="primary" (click)="saveProfile()">Save Changes</ion-button> -->
+    <ion-button expand="full" color="danger" (click)="logout()">Logout</ion-button>
+  </div>
+</ion-content>

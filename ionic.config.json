@@ -1,0 +1,7 @@
+{
+  "name": "Stimul8",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

@@ -1,0 +1,43 @@
+<ion-content [fullscreen]="true" class="ion-login" [scrollEvents]="false" style="--keyboard-offset: 0px;">
+  <div class="loginwrapp">
+    <ion-img class="logingLogo" src="../../../assets/images/stimul8.svg" alt="Logo"></ion-img>
+    <ion-card>
+      <h1 class="ion-text-center">Login </h1>
+      <form [formGroup]="loginForm">
+        <ion-item lines="none">
+          <ion-img slot="start" src="../../assets/images/mail-icon.svg"></ion-img>
+          <ion-input type="text" formControlName="username" placeholder="Enter User Name"></ion-input>
+
+        </ion-item>
+        <div class="inputError" *ngIf="submitted||(form['username'].touched && form['username'].invalid)">
+          <small class="form-text error-message" *ngIf="form['username'].errors">
+            Username is required</small>
+        </div>
+        <ion-item lines="none">
+          <ion-img slot="start" src="../../assets/images/lock-icon.svg"></ion-img>
+          <ion-input [type]="initailType" formControlName="password" placeholder="Enter Password"></ion-input>
+          <ion-button class="showOrHidePassword" (click)="showOrHidePassword()">
+            <ion-icon *ngIf="isClicked === true" name="eye-off-outline"></ion-icon>
+            <ion-icon *ngIf="isClicked === false" name="eye-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div class="inputError" *ngIf="submitted||(form['password'].touched && form['password'].invalid)">
+          <small class="form-text error-message" *ngIf="form['password'].errors"> Password is required</small>
+        </div>
+        <!-- <ion-row>
+          <ion-col size="12">
+            <ion-checkbox class="ionCheckbox ion-float-left" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="rememberMe" (ionChange)="rememberMe = $event.detail.checked" labelPlacement="end">
+              Remember Me
+            </ion-checkbox>
+          </ion-col>
+        </ion-row> -->
+        <!-- <ion-text class="forgotPassword" [routerLink]="['/forgotpassword']">
+          Forgot Password?
+        </ion-text> -->
+        <ion-button slot="primary" fill="solid" shape="round" expand="block" (click)="onSubmit()"> Login </ion-button>
+        <!-- <ion-button slot="primary" fill="solid" shape="round" expand="block" [routerLink]="['/home']"> Login </ion-button> -->
+      </form>
+    </ion-card>
+  </div>
+</ion-content>

@@ -1,0 +1,395 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+@font-face {
+    font-family: 'Poppins', sans-serif;
+    src: url('assets/fonts/Poppins-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Poppins', sans-serif;
+    src: url('assets/fonts/Poppins-SemiBold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+@font-face {
+    font-family: 'Poppins', sans-serif;
+    src: url('assets/fonts/Poppins-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+body {
+    font-family: var(--ion-font-family);
+}
+
+.secondaryColor {
+    color: var(--ion-color-secondary) !important;
+}
+
+.ion-login {
+    --background: url('assets/images/login-left-bg.svg') no-repeat center left / cover;
+}
+
+.bgWrapp {
+    --background: url('assets/images/home-bg.png') no-repeat center left / cover;
+}
+
+.contentBgWrapp {
+    --background: url('assets/images/content-bg.png') no-repeat center left / cover;
+}
+
+.innerContentBg {
+    --background: url('assets/images/content-bg.png') no-repeat center left / cover;
+}
+
+
+.loginwrapp {
+    width: 90%;
+    margin: auto;
+    margin-top: 15%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    height: -webkit-fill-available;
+    justify-content: space-between;
+    .logingLogo {
+        width: 220px;
+        margin: 0 auto;
+        margin-bottom: 30px;
+    }
+
+    ion-item {
+        margin-top: 15px;
+        --background: none !important;
+        border-bottom: 1px solid #74A1BD;
+        border-radius: 0px;
+
+        //   box-shadow: 0rem 0.4rem 0.4rem rgba(101, 147, 160, 0.37) !important;
+    }
+
+    ion-img {
+        margin-right: 0px;
+    }
+
+    ion-card {
+        box-shadow: none;
+        --background: transparent;
+    }
+
+    ion-input {
+        font-size: 0.85rem;
+        --padding-start: 10px !important;
+        --padding-end: 10px !important;
+        --border-width: 0px;
+        --background: transparent;
+    }
+
+    ion-button {
+        font-size: 16px;
+        min-height: 40px;
+        margin-top: 30px;
+    }
+
+    h1 {
+        font-size: 1.563rem;
+        margin: 0px;
+        font-weight: 500;
+        color: #4d3896;
+        margin-bottom: 30px;
+    }
+
+    .forgotPassword {
+        font-size: 0.8rem;
+        color: #4d3896;
+        display: block;
+        text-align: right;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+.homeWrapp {
+
+    p {
+        font-size: 0.85rem;
+        color: #fff;
+        margin: 0px;
+    }
+
+    h4 {
+        font-size: 1rem;
+        font-weight: 700;
+        color: #4d3896;
+    }
+
+    .ion-col-border-right {
+        border-right: solid 1px #D5D5D5;
+    }
+
+    .truckTypeLeft {
+        padding-left: 10px;
+    }
+
+    ion-item {
+
+        --inner-padding-end: 0px;
+        --inner-padding-start: 0px;
+    }
+
+    ion-button {
+        min-height: 33px;
+        letter-spacing: 0.5px;
+        --padding-start: 1rem;
+        --padding-end: 1rem;
+        text-transform: capitalize;
+    }
+
+    ion-avatar {
+        margin-right: 5px;
+        background-color: #E6F0FE;
+        vertical-align: middle;
+        width: 50px;
+        height: 50px;
+        display: flex;
+
+        ion-img {
+            width: 25px;
+            height: 25px;
+            border-radius: 0px;
+            margin: auto;
+            padding: 0px;
+            display: block;
+        }
+    }
+
+    .ion-float-left {
+        padding-top: 11px;
+        font-size: 0.8rem;
+        display: flex;
+
+        ion-icon {
+            font-size: 1rem;
+            margin-right: 4px;
+        }
+    }
+
+    .item-Bottom-Text {
+        padding-top: 12px;
+        display: inline-block;
+        width: 100%;
+    }
+
+    .ion-padding-end {
+        padding-right: 6px;
+    }
+
+    ion-icon {
+        font-size: 40px;
+    }
+
+    ion-img {
+        margin: 0 auto;
+        margin-bottom: 15px;
+        height: 45px;
+    }
+
+}
+
+
+ion-header {
+
+    ion-toolbar {
+        --background: none !important;
+    }
+
+    ion-title {
+        color: #fff;
+        padding-top: 5px;
+    }
+
+    ion-text {
+        font-size: 0.8rem;
+        color: #fff;
+        margin-right: 7px;
+        margin-top: 10px;
+    }
+
+    ion-button {
+        --border: none;
+        --border-radius: 50%;
+        --background: #fff;
+        width: 32px;
+        min-height: 32px;
+        --padding-start: 0px;
+        --padding-end: 0px;
+        --padding-top: 0px;
+        --padding-bottom: 0px;
+        margin-right: 8px;
+
+        ion-img {
+            width: 20px;
+        }
+
+        .filterIcon {
+            width: 17px;
+        }
+    }
+
+    .ion-header-Right {
+        padding-right: 10px;
+    }
+
+    ion-icon {
+        font-size: 20px;
+    }
+
+}
+
+
+.ionFooter {
+    box-shadow: none;
+    border: none;
+    background: #ffffff;
+
+    ion-text {
+        color: #073C51;
+        font-size: 0.8rem;
+        text-align: center;
+        margin-top: 5px;
+        display: block;
+    }
+
+    .ionImg {
+        background-color: #fff;
+        border-radius: 6px;
+        box-shadow: 0rem 0.1rem 0.4rem rgb(101 147 160 / 40%) !important;
+        padding: 19px 10px;
+        height: 70px;
+
+        ion-img {
+            width: 40px;
+            height: 40px;
+            margin: auto;
+        }
+
+        .filling-truck-icon {
+            width: 30px;
+            height: 30px;
+        }
+
+        .profile-icon {
+            width: 25px;
+            height: 25px;
+        }
+    }
+
+    ion-toolbar {
+        --background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+}
+
+form .error-message {
+    margin-top: 4px;
+    display: block;
+    color: #e74c3c;
+    font-size: 13px;
+}
+
+.showOrHidePassword {
+    position: absolute;
+    right: 0px;
+    top: 6px;
+    z-index: 1050;
+    margin: 0px !important;
+    --background: transparent !important;
+    --box-shadow: none;
+    --color: var(--ion-color-primary);
+}
+.end-of-list-message {
+    position: relative;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    color: var(--ion-color-medium);
+    font-size: 14px;
+    text-align: center;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .end-of-list-message ion-icon {
+    font-size: 24px;
+    color: var(--ion-color-success);
+    margin-bottom: 4px;
+  }
+  .validation-message {
+    font-size: 0.875rem;  // slightly smaller text
+    color: var(--ion-color-danger) !important; // uses Ionic's danger color
+    p{
+        margin: 0px;
+        margin-left: 15px;
+        margin-top: 0px;
+    }
+  }
+  .sort-action-sheet .action-sheet-group {
+    padding: 0;
+  }
+  
+  .sort-action-sheet .action-sheet-button {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+    --color: #222;
+  }
+  
+  .sort-action-sheet .action-sheet-button:last-child {
+    border-bottom: none;
+  }
+  
+  .sort-action-sheet .action-sheet-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #000;
+    padding: 16px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
