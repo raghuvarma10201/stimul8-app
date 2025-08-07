@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">stimul8.ai</string>
+    <string name="title_activity_main">stimul8.ai</string>
+    <string name="package_name">io.stimul8.starterFCM</string>
+    <string name="custom_url_scheme">io.stimul8.starterFCM</string>
+</resources>

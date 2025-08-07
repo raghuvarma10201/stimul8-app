@@ -1,43 +1,58 @@
 .chat-content {
-  background: #f9f9fc;
-  padding: 16px 0 60px 0;
-  .msg-row-own, .msg-row-other {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 10px;
-  }
-  .msg-row-own   { flex-direction: row-reverse; }
-  .msg-row-other { flex-direction: row; }
+    background: #f9f9fc;
+    padding: 16px 0 60px 0;
 
-  .msg-bubble {
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 12px 15px;
-    max-width: 65vw;
-    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
-    margin: 0 10px;
-    font-size: 15px;
-    position: relative;
-  }
-  .msg-author {
-    font-weight: bold;
-    color: #57617b;
-    margin-bottom: 3px;
-    font-size: 13px;
-  }
-  .msg-text { margin-bottom: 6px; }
-  .msg-time {
-    font-size: 12px;
-    color: #bbb;
-    display: flex;
-    align-items: center;
-  }
-  .msg-error {
-    color: #e74c3c;
-    font-size: 12px;
-    margin-top: 4px;
-  }
+    .msg-row-own,
+    .msg-row-other {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .msg-row-own {
+        flex-direction: row-reverse;
+    }
+
+    .msg-row-other {
+        flex-direction: row;
+    }
+
+    .msg-bubble {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 12px 15px;
+        max-width: 65vw;
+        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+        margin: 0 10px;
+        font-size: 15px;
+        position: relative;
+    }
+
+    .msg-author {
+        font-weight: bold;
+        color: #57617b;
+        margin-bottom: 3px;
+        font-size: 13px;
+    }
+
+    .msg-text {
+        margin-bottom: 6px;
+    }
+
+    .msg-time {
+        font-size: 12px;
+        color: #bbb;
+        display: flex;
+        align-items: center;
+    }
+
+    .msg-error {
+        color: #e74c3c;
+        font-size: 12px;
+        margin-top: 4px;
+    }
 }
+
 .nameRounded {
     border-radius: 50%;
     border: solid 1px #C6CBD9;
@@ -51,12 +66,14 @@
     color: #78828F;
     margin-left: 10px;
 }
+
 .channel-icon {
     width: 28px;
     height: 28px;
     object-fit: contain;
     border-radius: 50%;
 }
+
 .channel-item.welcome-box {
     --border-radius: 6px;
     margin: 12px;
@@ -65,61 +82,187 @@
     border: 1px solid #e2deea;
     background-color: #efebf7;
     color: #4608ad;
-  }
-  
+}
+
 .welcome-header {
     background-color: transparent;
     font-weight: bold;
     font-size: 16px;
     color: #4608ad;
-  }
-  
-  .welcome-icon {
+}
+
+.welcome-icon {
     width: 28px;
     height: 28px;
-  }
-  
-  .welcome-title {
+}
+
+.welcome-title {
     font-size: 16px;
     font-weight: 600;
     color: #4608ad;
-  }
-  
-  .welcome-list {
+}
+
+.welcome-list {
     padding: 0;
-  }
-  
-  .welcome-msg-item {
+}
+
+.welcome-msg-item {
     background-color: transparent;
     font-size: 14px;
     color: #303030 !important;
     --min-height: 44px;
     border-bottom: 1px solid #e0e0e0;
     padding-bottom: 8px;
-  
+
     ion-icon.info-icon {
-      color: #4608ad;
-      font-size: 20px;
-      margin-right: 8px;
+        color: #4608ad;
+        font-size: 20px;
+        margin-right: 8px;
     }
-  
+
     ion-label {
-      white-space: normal;
-      color: #303030 !important;
+        white-space: normal;
+        color: #303030 !important;
     }
-  }
+}
+
+.userChatContent {
+  background: #f5f3fb;
+  padding: 10px 16px;
+  margin: 8px 0;
+  border-radius: 10px 10px 0px 10px;
+  /* chat bubble style */
+  max-width: 100%;
+  align-self: flex-end;
+  /* right-align if using flex */
+  min-width: 200px;
+
+  font-size: 14px;
+  color: #333;
+  line-height: 1.5;
+  margin-top: 0px;
+  border: 1px solid #e4e1f5;
+}
+
+.aiChatContent {
+  background: #f7f3ff;
+  padding: 10px 16px;
+  margin: 8px 0;
+  border-radius: 10px 10px 10px 0px;
+  /* mirrored bubble style */
+  max-width: 100%;
+  min-width: 100%;
+  align-self: flex-start;
+  /* left-align */
+
+  font-size: 14px;
+  color: #444;
+  line-height: 1.5;
+  margin-top: 0px;
+  position: relative;
+  padding-right: 100px;
+  border: 1px solid #e4e1f5;
+}
+
+/* Action icons below the chat bubble */
+.userSectionContainer {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.aiChatContainer {
+  position: relative;
+  width: 100%;
+}
+
+// .message-actions{ position: absolute; right: 0px; bottom: -28px;}
+.userSectionContainer .message-actions {
+  position: absolute;
+  right: 0px;
+  bottom: -28px;
+}
+
+.aiChatContainer .message-actions {
+  position: absolute;
+  left: 0px;
+  bottom: -28px;
+  z-index: 999;
+}
+
+.message-actions ul {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+.message-actions ul li {
+  display: inline-block;
+  margin-left: 10px;
+  width: 24px;
+  height: 24px;
+  border-radius: 100%;
+  background-color: #f7f3ff;
+  border: 1px solid #e4e1f5;
+  position: relative;
+  cursor: pointer;
+  text-align: center;
+  font-size: 12px;
+}
+
+.message-actions ul li span {
+  font-size: 12px;
+  color: #4608ad;
+  line-height: 24px;
+}
+
+.message-actions ul li:hover {
+  background-color: #4608ad;
+}
+
+.message-actions ul li:hover span {
+  color: #fff;
+}
+
+.message-actions ul li.active {
+  background-color: #4608ad;
+}
+
+.message-actions ul li.active span {
+  color: #fff;
+}
+
+.userChat .message-actions,
+.aiChatContainer .message-actions {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.userChat.latest .message-actions,
+.userChat:hover .message-actions.show,
+.aiChat.latest .message-actions,
+.aiChat:hover .message-actions.show {
+  opacity: 1;
+}
+
+.userChat:hover .message-actions,
+.aiChat:hover .message-actions {
+  opacity: 1;
+}
+
 ion-footer {
-  ion-toolbar {
-    ion-item {
-      --border-width: 0;
+    ion-toolbar {
+        ion-item {
+            --border-width: 0;
+        }
+
+        ion-input {
+            flex: 1;
+            font-size: 15px;
+            --padding-start: 8px;
+        }
+
+        ion-button {
+            margin-left: 8px;
+        }
     }
-    ion-input {
-      flex: 1;
-      font-size: 15px;
-      --padding-start: 8px;
-    }
-    ion-button {
-      margin-left: 8px;
-    }
-  }
 }

@@ -83,6 +83,29 @@ export class CommonService {
       .post<any>(environment.apiUrl + entityType + 's', entityData, { headers: this.headers })
       .pipe(catchError(this.handleError));
   }
+  goodResponse(intractionId: any): Observable<any> {
+    return this.http
+      .post<any>(
+        environment.apiUrl +
+          'interaction-history/' +
+          intractionId +
+          '/mark-as-good-response',
+        null
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  badResponse(intractionId: any, payload: any): Observable<any> {
+    return this.http
+      .post<any>(
+        environment.apiUrl +
+          'interaction-history/' +
+          intractionId +
+          '/mark-as-bad-response',
+        payload
+      )
+      .pipe(catchError(this.handleError));
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

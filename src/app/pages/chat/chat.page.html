@@ -11,7 +11,7 @@
 <ion-content class="chat-content">
 
   <div *ngFor="let message of chatMessages; let i = index">
-    <div *ngIf="message.sender === 'user'"  class="msg-row-own" >
+    <div *ngIf="message.sender === 'user'"  class="userChatContent msg-row-own" >
       <div class="msg-bubble">
         <!-- <div class="msg-author">{{ message.author }}</div> -->
         <div class="msg-text">{{ message.text }}</div>
@@ -20,7 +20,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="message.sender === 'bot'"  class="msg-row-other" >
+    <div *ngIf="message.sender === 'bot'"  class="aiChatContent msg-row-other" >
       <div class="msg-bubble">
         <!-- <div class="msg-author">{{ message.author }}</div> -->
         <div class="msg-text">
@@ -36,6 +36,33 @@
         <div class="msg-time">
           {{ message.timestamp | date:'shortTime' }} <ion-icon name="checkmark-done-circle-outline"></ion-icon>
         </div>
+      </div>
+      <div class="message-actions" *ngIf="isResponseAction">
+        <ul>
+          <li title="Good Response" placement="bottom" container="body"
+            [class.active]="message.feedback?.is_good || goodResponseIndex === i"
+            (click)="handleGoodResponse(message, i)">
+            <span class="icon-wrapper">
+              <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+            </span>
+          </li>
+
+          <li title="Bad Response" placement="bottom" container="body"
+            [class.active]="message.feedback?.is_good === false || badResponseIndex === i"
+            >
+            <span class="icon-wrapper">
+              <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+            </span>
+          </li>
+          <li *ngIf="message.type !== 'tabbed-view'" [title]="copiedMessageId === i ? 'Copied!' : 'Copy'"
+            placement="bottom" container="body">
+            <span class="icon-wrapper" [class.active]="copiedMessageId === i"
+              (click)="copyToClipboard(message, i)">
+              <i class="fa" [class.fa-check]="copiedMessageId === i" [class.fa-clone]="copiedMessageId !== i"
+                aria-hidden="true"></i>
+            </span>
+          </li>
+        </ul>
       </div>
     </div>
   </div>

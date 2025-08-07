@@ -333,11 +333,6 @@ export class ChatPage implements OnInit {
     this.uploadedFiles = [];
   }
 
-  /**
-   * Checks if the user input matches any predefined strings
-   * @param userInput - The input string to check
-   * @returns Whether the input matches any predefined strings
-   */
   checkInput(userInput: string): boolean {
     const predefinedStrings = this.staticChatData.allstrings.map(
       (str: string) => str.toLowerCase()
@@ -437,7 +432,6 @@ export class ChatPage implements OnInit {
     if (!response.response) {
       return;
     }
-
     const responseMsg = response.response;
     botMessage.text = responseMsg;
     botMessage.context_messages = response.context_messages;
@@ -445,10 +439,7 @@ export class ChatPage implements OnInit {
     this.chatMessages.push(botMessage);
     this.typingAnimation(responseMsg as string);
   }
-  /**
-   * Animates the typing of a response message
-   * @param responseText - The text to animate
-   */
+
   typingAnimation(responseText: string): void {
     let currentText = "";
     let index = 0;
@@ -461,10 +452,7 @@ export class ChatPage implements OnInit {
     this.isButtonDisabled = true;
     this.typeMarkdown(responseText);
   }
-  /**
-   * Types out markdown content with animation
-   * @param content - The content to type out
-   */
+
   async typeMarkdown(content: any) {
     this.isResponseAction = false;
     let currentText = "";
@@ -484,6 +472,119 @@ export class ChatPage implements OnInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  handleGoodResponse(message: any, i: number): void {
+    //this.logger.debug('handleGoodResponse', message, i);
+    if (
+      message.feedback === undefined ||
+      (typeof message.feedback === 'object' &&
+        Object.keys(message.feedback).length === 0) || // empty object
+      !message.feedback?.is_good
+    ) {
+      this.goodResponse(message, i);
+    }
+  }
+
+  handleBadResponse(content: any, message: any, i: number): void {
+    //this.logger.debug('handleBadResponse', content, message, i);
+    if (
+      message.feedback === undefined ||
+      (typeof message.feedback === 'object' &&
+        Object.keys(message.feedback).length === 0) || // empty object
+      message.feedback?.is_good === true ||
+      message.feedback?.is_good === false
+    ) {
+      this.badResponse(content, message, i);
+    }
+  }
+
+  /**
+ * Handles good response
+ * @param message - The message to handle
+ * @param index - The index of the message
+ */
+  goodResponse(message: any, index: any) {
+    const intractionId = message.responseId;
+    this.commonService.goodResponse(intractionId).subscribe({
+      next: (res) => {
+        this.goodResponseIndex = index;
+        if (!this.chatMessages[index].feedback) {
+          this.chatMessages[index].feedback = {
+            reason: '',
+            comment: '',
+            is_good: false,
+            is_bad: false,
+          };
+        }
+        this.chatMessages[index].feedback!.is_good = true;
+        this.chatMessages[index].feedback!.is_bad = false;
+        this.inlineToastMessage = NotificationMessages.GOOD_RESPONSE;
+        this.toastService.showSuccess("", this.inlineToastMessage)
+      },
+      error: (err) => {
+        // handle error
+        //this.logger.error('Error occurred', err);
+      },
+    });
+  }
+
+  /**
+   * Handles bad response
+   * @param content - The content to handle
+   * @param message - The message to handle
+   * @param index - The index of the message
+   */
+  badResponse(content: any, message: any, index: any) {
+
+    this.selectedFeedbackMessageIndex = index;
+
+    this.selectedFeedback = message;
+
+  }
+
+  copyToClipboard(message: any, messageId: number): void {
+    //this.logger.debug(message, messageId);
+    switch (message.type) {
+      case 'code':
+        navigator.clipboard
+          .writeText(message.text.code)
+          .then(() => {
+            //this.handleCopySuccess(messageId);
+          })
+          .catch((err) => {
+            //this.logger.error('Could not copy code:', err);
+          });
+        break;
+
+      case 'html':
+        navigator.clipboard
+          .writeText(message.text)
+          .then(() => {
+            //this.handleCopySuccess(messageId);
+          })
+          .catch((err) => {
+            // this.logger.error('Could not copy HTML:', err);
+          });
+        break;
+
+      case 'graph':
+        //this.copyGraphAsImage(message, messageId);
+        break;
+
+      default:
+        if (message.text) {
+          navigator.clipboard
+            .writeText(message.text)
+            .then(() => {
+              //this.handleCopySuccess(messageId);
+            })
+            .catch((err) => {
+              //this.logger.error('Could not copy text:', err);
+            });
+        } else {
+          //this.logger.warn('Copy not supported for this message type.');
+        }
+    }
+  }
   private handleFormResponse(response: ApiResponse): void {
     const responseMsg = response.data;
     if (responseMsg) {
@@ -591,7 +692,7 @@ export class ChatPage implements OnInit {
           .pipe(
             takeUntil(this.destroy$),
             finalize(() => {
-              
+
               this.cdr.detectChanges();
             })).subscribe({
               next: (res: any) => {
