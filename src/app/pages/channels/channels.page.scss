@@ -1,0 +1,50 @@
+.channel-group {
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e0e0e0;
+    padding-bottom: 8px;
+  }
+  
+  .channel-item {
+    --border-radius: 6px;
+    margin: 6px 12px;
+    // --background: #efebf7;
+    border: 1px solid #e2deea;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); // More prominent shadow
+    color: #4608ad;
+  
+    // Optional: Force inner label color
+    ion-label {
+      color: #4608ad;
+      font-weight: 500;
+    }
+  }
+  
+  
+  .channel-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  ion-footer {
+    ion-toolbar {
+      padding: 12px;
+      --background: #f6f2fd;
+    }
+  
+    ion-button {
+      font-weight: 600;
+      font-size: 16px;
+      --border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+  
+    ion-icon {
+      margin-right: 8px;
+      font-size: 20px;
+    }
+  }
+  
+  
+  

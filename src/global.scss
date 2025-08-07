@@ -232,7 +232,7 @@ ion-header {
     }
 
     ion-title {
-        color: #fff;
+        color: #4608ad;
         padding-top: 5px;
     }
 
@@ -255,6 +255,7 @@ ion-header {
         --padding-bottom: 0px;
         margin-right: 8px;
 
+
         ion-img {
             width: 20px;
         }
@@ -263,6 +264,9 @@ ion-header {
             width: 17px;
         }
     }
+    ion-back-button {
+        --color: #4608ad;
+      }
 
     .ion-header-Right {
         padding-right: 10px;
@@ -393,3 +397,4 @@ form .error-message {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
+ 
