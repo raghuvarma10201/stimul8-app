@@ -39,6 +39,28 @@
       </div>
     </div>
   </div>
+
+  <!-- Welcome Message Display -->
+  <div *ngIf="!loading && chatMessages.length === 0" class="channel-item welcome-box">
+    <ion-item lines="none" class="welcome-header">
+      <img 
+            src="assets/images/icons/channels.gif" 
+            alt="Channel Icon" 
+            slot="start" 
+            class="channel-icon"
+          />
+      <ion-label class="welcome-title">
+        Here are some things that I can help with.
+      </ion-label>
+    </ion-item>
+
+    <ion-list class="welcome-list">
+      <ion-item lines="none" *ngFor="let msg of welcomeMessageList" class="welcome-msg-item">
+        
+        <ion-label>{{ msg }}</ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
 </ion-content>
 
 <ion-footer>

@@ -52,7 +52,7 @@ export class ChatPage implements OnInit {
   chatForm: FormGroup;
   channelForm: FormGroup = new FormGroup({});
   staticChatData = demodata;
-
+  loading: boolean = false;
   chatMessages: ChatMessage[] = [
     {
       type: "",
@@ -219,9 +219,12 @@ export class ChatPage implements OnInit {
   }
 
   ngOnInit() {
+    this.chatMessages = [];
+  }
+  ionViewDidEnter() {
     // Use takeUntil for all subscriptions
-    this.fetchWelcomeMessagesList();
-    this.fetchChannels();
+    this.chatMessages = [];
+    this.channelHandler(this.channelId);
     this.loadSelectedNameOptions();
 
     this.commonService.messages$.pipe(takeUntil(this.destroy$)).subscribe({
@@ -234,7 +237,6 @@ export class ChatPage implements OnInit {
       },
     });
   }
-  ionViewDidEnter() {}
 
   /**
    * Handles input change events
@@ -382,9 +384,9 @@ export class ChatPage implements OnInit {
     const apiCall =
       this.uploadedFiles.length > 0
         ? this.commonService.sendUserMessageWithAttachment(
-            this.selectedChannel.id,
-            formData
-          )
+          this.selectedChannel.id,
+          formData
+        )
         : this.commonService.sendUserMessage(this.selectedChannel.id, formData);
 
     apiCall
@@ -478,12 +480,6 @@ export class ChatPage implements OnInit {
     this.isButtonDisabled = false;
   }
 
-  
-  /**
-   * Utility function to create a delay
-   * @param ms - Milliseconds to sleep
-   * @returns A promise that resolves after the specified time
-   */
   sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -493,7 +489,6 @@ export class ChatPage implements OnInit {
     if (responseMsg) {
       const { operation, entity_type, entity_id } = responseMsg;
       const componentName = this.getComponentName(entity_type.toLowerCase());
-
       if (operation === "edit") {
         this.commonService
           .getDataByEntityId(`${entity_type.toLowerCase()}s`, entity_id)
@@ -534,9 +529,10 @@ export class ChatPage implements OnInit {
       entity_type: string;
     },
     response: ChannelResponse | string
-  ): void {}
+  ): void { }
 
   async fetchWelcomeMessagesList() {
+    this.loading = true;
     await this.loaderService.loadingPresent();
     this.commonService
       .getWelcomeMessage()
@@ -552,77 +548,30 @@ export class ChatPage implements OnInit {
             this.welcomeMessageList = res;
             this.cannedMessages = res;
             this.loaderService.loadingDismiss();
+            this.loading = false;
           } else {
             this.loaderService.loadingDismiss();
             this.toastService.showError(res.message, "Error");
+            this.loading = false;
           }
         },
         (error) => {
           this.loaderService.loadingDismiss();
           this.errorMsg = error.error.message;
+          this.loading = false;
           this.toastService.showError(this.errorMsg, "Error");
         }
       );
   }
-  async fetchChannels() {
-    await this.loaderService.loadingPresent();
-    this.commonService
-      .getAllChannelsData()
-      .pipe(
-        finalize(() => {
-          this.loaderService.loadingDismiss();
-        })
-      )
-      .subscribe(
-        (response: any) => {
-          if (response.data?.length > 0) {
-            this.loaderService.loadingDismiss();
-            this.groupedChannels = response.data;
-
-            // Select first channel from first group if no channel is selected
-            if (
-              (!this.selectedChannel ||
-                Object.keys(this.selectedChannel).length === 0) &&
-              this.groupedChannels.length > 0
-            ) {
-              // Find first non-empty group
-              const firstNonEmptyGroup = this.groupedChannels.find(
-                (group) => group.length > 0
-              );
-
-              // Get first channel from first non-empty group
-              if (firstNonEmptyGroup && firstNonEmptyGroup.length > 0) {
-                const firstChannel = firstNonEmptyGroup[0];
-                if (firstChannel && firstChannel.id) {
-                  this.channelHandler(firstChannel.id);
-                }
-              }
-            }
-          } else {
-            this.loaderService.loadingDismiss();
-            this.toastService.showError("vxcvxcvxvxcv", "Error");
-          }
-        },
-        (error) => {
-          this.loaderService.loadingDismiss();
-          this.errorMsg = error.error.message;
-          this.toastService.showError("sadasdasd", "Error");
-        }
-      );
-  }
-  /**
-   * Handles channel selection and initialization
-   * @param channelId - The ID of the channel to handle
-   */
   channelHandler(channelId: string): void {
     channelId = this.channelId;
-    this.loaderService.loadingDismiss();
+    this.loaderService.loadingPresent();
+    this.loading = true;
     if (!channelId) {
-      //this.logger.error('Channel ID is required');
       this.loaderService.loadingDismiss();
+      this.loading = false;
       return;
     }
-    this.loaderService.loadingPresent();
     this.chatMessages = [];
     this.cannedMessages = [];
 
@@ -632,77 +581,73 @@ export class ChatPage implements OnInit {
       next: (data: ChannelResponse) => {
         console.log(data);
         this.selectedChannel = data;
-
         if (data.id) {
           localStorage.setItem("selectedChannelId", data.id);
         }
-
         const payload = {};
         //this.calculateChatMessagesHeight();
-
         this.commonService
           .getChannelHistory(data.id, payload)
           .pipe(
             takeUntil(this.destroy$),
             finalize(() => {
-              this.isLoading = false;
-              this.loaderService.loadingDismiss();
-              // this.modalReference?.close();
-              // this.resetForm();
+              
               this.cdr.detectChanges();
-            })
-          )
-          .subscribe({
-            next: (res: any) => {
-              if (res.data.length > 0) {
-                console.log(res);
-                res.data.forEach((obj: ChannelHistoryResponse) => {
-                  const { response, request, id, feedback } = obj;
-                  if (request) {
-                    this.chatMessages.push({
-                      text: request.message,
-                      timestamp: request.date,
-                      sender: "user",
-                      files: Array.isArray(request.data) ? request.data : [],
-                    });
-                  }
-                  if (response) {
-                    let responseText = response.response;
-                    if (responseText !== "None") {
-                      responseText = responseText
-                        .replace(/[{}"]/g, "")
-                        .replace(/\\n/g, "\n");
+            })).subscribe({
+              next: (res: any) => {
+                if (res.data.length > 0) {
+                  this.loaderService.loadingDismiss();
+                  console.log(res);
+                  res.data.forEach((obj: ChannelHistoryResponse) => {
+                    const { response, request, id, feedback } = obj;
+                    if (request) {
+                      this.chatMessages.push({
+                        text: request.message,
+                        timestamp: request.date,
+                        sender: "user",
+                        files: Array.isArray(request.data) ? request.data : [],
+                      });
                     }
-                    this.chatMessages.push({
-                      text: responseText,
-                      timestamp: response.date,
-                      sender: "bot",
-                      responseId: id,
-                      feedback: feedback,
-                      error: false,
-                    });
-                  }
-                });
-                this.cdr.detectChanges();
-                setTimeout(() => this.scrollToBottom(true), 0);
+                    if (response) {
+                      let responseText = response.response;
+                      if (responseText !== "None") {
+                        responseText = responseText
+                          .replace(/[{}"]/g, "")
+                          .replace(/\\n/g, "\n");
+                      }
+                      this.chatMessages.push({
+                        text: responseText,
+                        timestamp: response.date,
+                        sender: "bot",
+                        responseId: id,
+                        feedback: feedback,
+                        error: false,
+                      });
+                    }
+                  });
+                  this.cdr.detectChanges();
+                  setTimeout(() => this.scrollToBottom(true), 0);
+                  this.isResponseAction = true;
+                } else {
+                  this.chatMessages = [];
+                  this.fetchWelcomeMessagesList();
+                }
+              },
+              error: (error: ApiError) => {
+                this.loaderService.loadingDismiss();
+                this.errorMsg = error.detail || "";
+                this.toastService.showError(
+                  NotificationMessages.FETCH_ERROR_MESSAGE,
+                  "Error"
+                );
                 this.isResponseAction = true;
-              }
-            },
-            error: (error: ApiError) => {
-              this.loaderService.loadingDismiss();
-              this.errorMsg = error.detail || "";
-              this.toastService.showError(
-                NotificationMessages.FETCH_ERROR_MESSAGE,
-                "Error"
-              );
-              this.isResponseAction = true;
-            },
-            complete: () => {
-              this.isResponseAction = true;
-              this.isLoading = false;
-              //this.cdr.detectChanges();
-            },
-          });
+              },
+              complete: () => {
+                this.isResponseAction = true;
+                this.isLoading = false;
+                //this.cdr.detectChanges();
+              },
+            });
       },
       error: (error: ApiError) => {
         this.loaderService.loadingDismiss()

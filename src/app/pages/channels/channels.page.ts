@@ -33,7 +33,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
       }))
       .subscribe({
         next: (response: any) => {
-         
+          //response.data = [];
           if (response.data?.length > 0) {
             this.groupedChannels = response.data
               .map((group: any[], index: number) => {
