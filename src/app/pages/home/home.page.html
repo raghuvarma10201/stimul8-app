@@ -1,55 +1,22 @@
-
-
 <ion-content [fullscreen]="true" class="bgWrapp homeWrapp">
 
   <ion-img class="homeLogo" src="../../../assets/images/stimul8.svg" alt="Logo"></ion-img>
 
   <ion-grid>
     <ion-row>
-      <ion-col size="6" [routerLink]="['/stock']" >
-        <ion-card class="stimul8-card blue">
-          <!-- <ion-icon name="cube-outline"></ion-icon> -->
-          <ion-img  src="../../assets/images/stock-icon.svg"></ion-img> 
-          <p>Stock</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" [routerLink]="['/consumption']" >
-        <ion-card class="stimul8-card yellow">
-          <ion-img  src="../../assets/images/consumption-icon.svg"></ion-img> 
-          <p>Consumption</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" [routerLink]="['/grn']" >
-        <ion-card class="stimul8-card green">
-          <ion-img  src="../../assets/images/stock-icon.svg"></ion-img>
-          <p>Delivery Note</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" [routerLink]="['/purchase-orders']" >
-        <ion-card class="stimul8-card purple">
-          <ion-img  src="../../assets/images/polist-icon.svg"></ion-img> 
-          <p>PO List</p>
-        </ion-card>
-      </ion-col>
-
-      <ion-col size="6" [routerLink]="['/search-request-items']" >
-        <ion-card class="stimul8-card dark-green">
-          <ion-img  src="../../assets/images/search-item-icon.svg"></ion-img>
-          <p>Search/Request Items</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" [routerLink]="['/transfer-requests']" >
-        <ion-card class="stimul8-card grey">
-          <ion-img  src="../../assets/images/transfer-request-icon.svg"></ion-img>
-          <p>Transfer Requests</p>
-        </ion-card>
-      </ion-col>
-      <ion-col size="6" [routerLink]="['/request-list']" >
-        <ion-card class="stimul8-card dark-blue">
-          <ion-img  src="../../assets/images/my-request-icon.svg"></ion-img>
-          <p>My Requests</p>
+      <ion-col
+        size="6"
+        *ngFor="let item of menuItems"
+        [routerLink]="[item.route]"
+      >
+        <ion-card class="stimul8-card ion-text-center">
+          <div class="card-inner">
+            <ion-img [src]="item.icon" class="card-icon"></ion-img>
+            <p class="card-label">{{ item.label }}</p>
+          </div>
         </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>
+
 </ion-content>
