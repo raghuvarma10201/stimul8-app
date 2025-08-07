@@ -1,0 +1,50 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar class="custom-header">
+    <ion-buttons slot="start">
+      <ion-back-button [defaultHref]="'/'+entityType.toLowerCase()+'s'"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create {{ entityType }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form [formGroup]="entityForm" (ngSubmit)="onSubmit()">
+    <!-- Name Field -->
+    <ion-item>
+      <ion-label position="floating">Name</ion-label>
+      <ion-input formControlName="name"></ion-input>
+    </ion-item>
+    <ion-text color="danger" *ngIf="f?.['name']?.touched && f?.['name']?.errors?.['required']">
+      Name is required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="f?.['name']?.errors?.['minlength']">
+      Minimum 3 characters required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="f?.['name']?.errors?.['maxlength']">
+      Maximum 100 characters allowed.
+    </ion-text>
+    <ion-text color="danger" *ngIf="f?.['name']?.errors?.['specialCharacters']">
+      Special characters are not allowed.
+    </ion-text>
+
+    <!-- Description Field -->
+    <ion-item class="ion-margin-top">
+      <ion-label position="floating">Description</ion-label>
+      <ion-textarea formControlName="description" autoGrow="true"></ion-textarea>
+    </ion-item>
+    <ion-text color="danger" *ngIf="f?.['description']?.touched && f?.['description']?.errors?.['required']">
+      Description is required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="f?.['description']?.errors?.['minlength']">
+      Minimum 50 characters required.
+    </ion-text>
+    <ion-text color="danger" *ngIf="f?.['description']?.errors?.['maxlength']">
+      Maximum 100 characters allowed.
+    </ion-text>
+
+    <!-- Submit Button -->
+    <ion-button type="submit" expand="block" class="ion-margin-top">
+      Create {{ entityType }}
+    </ion-button>
+  </form>
+</ion-content>

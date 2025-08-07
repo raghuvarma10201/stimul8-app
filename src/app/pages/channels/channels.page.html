@@ -1,5 +1,5 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar class="custom-header">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/home"></ion-back-button>
     </ion-buttons>
@@ -33,14 +33,35 @@
     </div>
   </ion-list>
 
-  <div *ngIf="!loading && groupedChannels.length === 0">
-    <ion-text color="medium">
-      <p class="ion-padding">No channels available.</p>
-    </ion-text>
-  </div>
+ 
+
+<!-- Welcome Message Display -->
+<div *ngIf="!loading && groupedChannels.length === 0" class="channel-item welcome-box">
+  <ion-item lines="none" class="welcome-header">
+    <img 
+          src="assets/images/icons/channels.gif" 
+          alt="Channel Icon" 
+          slot="start" 
+          class="channel-icon"
+        />
+    <ion-label class="welcome-title">
+      Here are some things that I can help with.
+    </ion-label>
+  </ion-item>
+
+  <ion-list class="welcome-list">
+    <ion-item lines="none" *ngFor="let msg of welcomeMessageList" class="welcome-msg-item">
+      
+      <ion-label>{{ msg }}</ion-label>
+    </ion-item>
+  </ion-list>
+</div>
+
+
+
 </ion-content>
 <ion-footer>
-  <ion-toolbar>
+  <ion-toolbar class="custom-footer">
     <ion-button expand="block" color="primary" (click)="onCreateChannel()">
       <ion-icon name="add-circle-outline" slot="start"></ion-icon>
       Create Channel

@@ -230,6 +230,9 @@ ion-header {
     ion-toolbar {
         --background: none !important;
     }
+    ion-toolbar.custom-header {
+        --background: #ffffff !important;
+    }
 
     ion-title {
         //color: #fff;

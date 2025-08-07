@@ -14,7 +14,8 @@ export class ChannelsPage implements OnInit {
 
   groupedChannels: any[] = [];
   loading = false;
-  constructor(private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, public router: Router) { }
+  welcomeMessageList: any[] = [];
+constructor( private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, private router: Router ) { }
 
   ngOnInit() {
     this.getAllChannels();
@@ -32,6 +33,7 @@ export class ChannelsPage implements OnInit {
       }))
       .subscribe({
         next: (response: any) => {
+         
           if (response.data?.length > 0) {
             this.groupedChannels = response.data
               .map((group: any[], index: number) => {
@@ -48,6 +50,7 @@ export class ChannelsPage implements OnInit {
               .filter(Boolean); // Remove null entries (i.e., empty groups)
           } else {
             this.groupedChannels = [];
+            this.getWelcomeMessageData();
           }
           this.cdr.detectChanges();
         },
@@ -59,6 +62,30 @@ export class ChannelsPage implements OnInit {
         },
       });
   }
+  getWelcomeMessageData() {
+    this.loader.loadingPresent();
+    this.commonService
+      .getWelcomeMessage()
+      .pipe(
+        finalize(() => this.loader.loadingDismiss())
+      )
+      .subscribe({
+        next: (response: any) => {
+          if (response?.length > 0) {
+            this.welcomeMessageList = response;
+           
+            this.cdr.detectChanges();
+          }
+        },
+        error: (error) => {
+          this.errorHandlingService.handleError(
+            error,
+            'ChannelsPage.getWelcomeMessageData'
+          );
+        },
+      });
+  }
+
   goToChannel(channel: any) {
     console.log('Navigating to channel:', channel);
     this.router.navigate(['/chat'], { state: { channelId: channel.id } });
@@ -67,6 +94,7 @@ export class ChannelsPage implements OnInit {
 
   onCreateChannel() {
     console.log('Create Channel button clicked');
+    this.router.navigate(['/create/channel']);
     // Example: Navigate to channel creation page
     // this.router.navigate(['/create-channel']);
   }
