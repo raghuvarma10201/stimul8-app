@@ -267,6 +267,19 @@ ion-header {
         .filterIcon {
             width: 17px;
         }
+        ion-icon{
+            color: #4608ad !important;
+            font-size: 24px !important;
+            
+        }
+        ion-icon.info-icon{
+            font-size: 24px !important;
+        }
+        ion-icon.more-icon{
+            font-size: 24px !important;
+        }
+       
+
     }
     ion-back-button {
         --color: #4608ad;

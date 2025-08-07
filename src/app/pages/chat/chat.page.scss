@@ -1,56 +1,107 @@
+// .chat-content {
+//   background: #f9f9fc;
+//   padding: 16px 0 60px 0;
+//   .msg-row-own, .msg-row-other {
+//     display: flex;
+//     align-items: flex-end;
+//     margin-bottom: 10px;
+    
+//   }
+//   .msg-row-own   { flex-direction: row-reverse; }
+//   .msg-row-other { flex-direction: row; }
+
+//   .msg-bubble {
+//     background: #ffffff;
+//     border-radius: 14px;
+//     padding: 12px 15px;
+//     max-width: 65vw;
+//     box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+//     margin: 0 10px;
+//     font-size: 15px;
+//     position: relative;
+//   }
+//   .msg-author {
+//     font-weight: bold;
+//     color: #57617b;
+//     margin-bottom: 3px;
+//     font-size: 13px;
+//   }
+//   .msg-text { margin-bottom: 6px; }
+//   .msg-time {
+//     font-size: 12px;
+//     color: #bbb;
+//     display: flex;
+//     align-items: center;
+//   }
+//   .msg-error {
+//     color: #e74c3c;
+//     font-size: 12px;
+//     margin-top: 4px;
+//   }
+// }
 .chat-content {
-    background: #f9f9fc;
-    padding: 16px 0 60px 0;
+  background: #f9f9fc;
+  padding: 16px 0 60px 0;
 
-    .msg-row-own,
-    .msg-row-other {
-        display: flex;
-        align-items: flex-end;
-        margin-bottom: 10px;
-    }
+  .msg-row-own,
+  .msg-row-other {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
 
-    .msg-row-own {
-        flex-direction: row-reverse;
-    }
+  .msg-row-own {
+    flex-direction: row-reverse;
+  }
 
-    .msg-row-other {
-        flex-direction: row;
-    }
+  .msg-row-other {
+    flex-direction: row;
+  }
 
-    .msg-bubble {
-        background: #ffffff;
-        border-radius: 14px;
-        padding: 12px 15px;
-        max-width: 65vw;
-        box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
-        margin: 0 10px;
-        font-size: 15px;
-        position: relative;
-    }
+  .msg-bubble {
+    border-radius: 14px;
+    padding: 12px 15px;
+    max-width: 65vw;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.05);
+    margin: 0 10px;
+    font-size: 15px;
+    position: relative;
+  }
 
-    .msg-author {
-        font-weight: bold;
-        color: #57617b;
-        margin-bottom: 3px;
-        font-size: 13px;
-    }
+  .msg-row-own .msg-bubble {
+    background: #ffffff;
+    color: #333;
+  }
 
-    .msg-text {
-        margin-bottom: 6px;
-    }
+  .msg-row-other .msg-bubble {
+    background: #e8f0fe; // Light blue for AI
+    color: #1a237e;
+    border: 1px solid #c3dafe;
+  }
 
-    .msg-time {
-        font-size: 12px;
-        color: #bbb;
-        display: flex;
-        align-items: center;
-    }
+  .msg-author {
+    font-weight: bold;
+    color: #57617b;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
 
-    .msg-error {
-        color: #e74c3c;
-        font-size: 12px;
-        margin-top: 4px;
-    }
+  .msg-text {
+    margin-bottom: 6px;
+  }
+
+  .msg-time {
+    font-size: 12px;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+  }
+
+  .msg-error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+  }
 }
 
 .nameRounded {
@@ -126,143 +177,143 @@
     }
 }
 
-.userChatContent {
-  background: #f5f3fb;
-  padding: 10px 16px;
-  margin: 8px 0;
-  border-radius: 10px 10px 0px 10px;
-  /* chat bubble style */
-  max-width: 100%;
-  align-self: flex-end;
-  /* right-align if using flex */
-  min-width: 200px;
+::ng-deep ion-modal {
+  --width: 100%;
+  --height: 100%;
+  --max-height: 100%;
+  --border-radius: 0px;
+  --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+}
 
-  font-size: 14px;
-  color: #333;
+::ng-deep ion-modal ion-content {
+  padding: 16px !important;
+  font-size: 15px;
   line-height: 1.5;
-  margin-top: 0px;
-  border: 1px solid #e4e1f5;
+  --padding-start: 16px !important;
+  --padding-end: 16px !important;
+  --padding-top: 16px !important;
+  --padding-bottom: 16px !important;
+
 }
 
-.aiChatContent {
-  background: #f7f3ff;
-  padding: 10px 16px;
-  margin: 8px 0;
-  border-radius: 10px 10px 10px 0px;
-  /* mirrored bubble style */
-  max-width: 100%;
-  min-width: 100%;
-  align-self: flex-start;
-  /* left-align */
-
-  font-size: 14px;
-  color: #444;
-  line-height: 1.5;
-  margin-top: 0px;
-  position: relative;
-  padding-right: 100px;
-  border: 1px solid #e4e1f5;
+::ng-deep ion-modal ion-header {
+  --background: #f4f5f8;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+  border-bottom: 1px solid #ccc;
 }
 
-/* Action icons below the chat bubble */
-.userSectionContainer {
-  position: relative;
-  margin-bottom: 25px;
+::ng-deep ion-modal ion-title {
+  font-weight: bold;
+  font-size: 18px;
+  padding-left: 10px;
 }
 
-.aiChatContainer {
-  position: relative;
-  width: 100%;
+::ng-deep ion-modal ion-toolbar {
+  --min-height: 56px;
 }
 
-// .message-actions{ position: absolute; right: 0px; bottom: -28px;}
-.userSectionContainer .message-actions {
-  position: absolute;
-  right: 0px;
-  bottom: -28px;
-}
 
-.aiChatContainer .message-actions {
-  position: absolute;
-  left: 0px;
-  bottom: -28px;
-  z-index: 999;
-}
+// @media (prefers-color-scheme: dark) {
+//   ::ng-deep ion-modal {
+//     --background: #1e1e1e;
+//     color: #fff;
+//   }
+// }
 
-.message-actions ul {
-  margin: 0px;
-  padding: 0px;
-  list-style: none;
-}
-
-.message-actions ul li {
-  display: inline-block;
-  margin-left: 10px;
-  width: 24px;
-  height: 24px;
-  border-radius: 100%;
-  background-color: #f7f3ff;
-  border: 1px solid #e4e1f5;
-  position: relative;
-  cursor: pointer;
-  text-align: center;
-  font-size: 12px;
-}
-
-.message-actions ul li span {
-  font-size: 12px;
-  color: #4608ad;
-  line-height: 24px;
-}
-
-.message-actions ul li:hover {
-  background-color: #4608ad;
-}
-
-.message-actions ul li:hover span {
-  color: #fff;
-}
-
-.message-actions ul li.active {
-  background-color: #4608ad;
-}
-
-.message-actions ul li.active span {
-  color: #fff;
-}
-
-.userChat .message-actions,
-.aiChatContainer .message-actions {
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
-}
-
-.userChat.latest .message-actions,
-.userChat:hover .message-actions.show,
-.aiChat.latest .message-actions,
-.aiChat:hover .message-actions.show {
-  opacity: 1;
-}
-
-.userChat:hover .message-actions,
-.aiChat:hover .message-actions {
-  opacity: 1;
-}
-
-ion-footer {
-    ion-toolbar {
-        ion-item {
-            --border-width: 0;
-        }
-
-        ion-input {
-            flex: 1;
-            font-size: 15px;
-            --padding-start: 8px;
-        }
-
-        ion-button {
-            margin-left: 8px;
-        }
+.custom-modal {
+  ion-toolbar{
+    --background: #4608ad !important;
+    ion-title{
+      color: #fff;
     }
+    ion-buttons{
+      ion-button{
+        --color: #fff;
+        ion-icon{
+          color: #fff !important;
+          font-size: 20px;
+        }
+      }
+    }
+    ion-content{
+      --background: #fff !important;
+      h3{
+        color: #4608ad !important;
+        font-weight: 600;
+        font-size: 16px !important;
+      }
+      p{
+        color: #000;
+        font-size: 14px !important;
+      }
+    } 
+  }
 }
+.chat-input-row {
+  // display: flex;
+  align-items: center;
+  padding-left: 8px;
+
+  ion-icon.chat-plus-icon {
+    font-size: 24px;
+    color: #555;
+    margin-right: 8px;
+    cursor: pointer;
+  }
+
+  ion-input.chat-message-input {
+    flex: 1;
+    font-size: 15px;
+    padding: 8px 12px;
+    background: #f1f1f1;
+    border-radius: 20px;
+    margin-right: 8px;
+  }
+
+  ion-button.chat-send-button {
+    font-size: 20px;
+    padding: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+    --color: #3b82f6; // Tailwind's blue-500
+  }
+}
+
+
+::ng-deep .custom-action-sheet {
+  --background: #fff;
+  --border-radius: 16px !important;
+  --box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.2);
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+::ng-deep .custom-action-sheet .action-sheet-title {
+  color: #4608ad !important; // ← Your desired color
+  font-weight: 600;
+  font-size: 16px;
+  text-align: left;
+}
+
+::ng-deep .custom-action-sheet .action-sheet-group {
+  padding: 0;
+}
+
+::ng-deep .custom-action-sheet .action-sheet-button {
+  border-top: 1px solid #e0e0e0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+
+  ion-icon {
+    color: #4608ad;
+    font-size: 20px;
+  }
+}
+
+/* Remove border for the first item */
+::ng-deep .custom-action-sheet .action-sheet-button:first-child {
+  border-top: none;
+}
+

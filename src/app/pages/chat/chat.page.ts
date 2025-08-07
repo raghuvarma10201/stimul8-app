@@ -12,6 +12,7 @@ import {
   ActionSheetController,
   InfiniteScrollCustomEvent,
   IonContent,
+  ModalController,
   NavController,
 } from "@ionic/angular";
 import { catchError, EMPTY, finalize, Subject, takeUntil } from "rxjs";
@@ -190,6 +191,7 @@ export class ChatPage implements OnInit {
   ];
 
   canvasMap: { [chartId: string]: HTMLCanvasElement } = {};
+  isDescriptionModalOpen: boolean = false;
   private readonly destroy$ = new Subject<void>();
   constructor(
     private fb: FormBuilder,
@@ -204,7 +206,9 @@ export class ChatPage implements OnInit {
     private actionSheetCtrl: ActionSheetController,
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
-    private authService: AuthService
+    private authService: AuthService,
+   
+    private modalCtrl: ModalController
   ) {
     this.chatForm = this.fb.group({
       message: [""],
@@ -803,4 +807,130 @@ export class ChatPage implements OnInit {
   logout() {
     this.authService.logout();
   }
+
+  openDescriptionModal() {
+    this.isDescriptionModalOpen = true;
+  }
+
+  async openActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Channel Actions',
+      cssClass: 'custom-action-sheet',
+
+      buttons: [
+        {
+          text: 'View',
+          icon: 'eye-outline',
+          handler: () => console.log('View clicked')
+        },
+        {
+          text: 'Copy',
+          icon: 'copy-outline',
+          handler: () => console.log('Copy clicked')
+        },
+        {
+          text: 'Edit',
+          icon: 'create-outline',
+          handler: () => console.log('Edit clicked')
+        },
+        {
+          text: 'Delete',
+          role: 'destructive',
+          icon: 'trash-outline',
+          handler: () => console.log('Delete clicked')
+        },
+        {
+          text: 'Add Agents',
+          icon: 'person-add-outline',
+          handler: () => console.log('Add Agents clicked')
+        },
+        {
+          text: 'Remove Agents',
+          icon: 'person-remove-outline',
+          handler: () => console.log('Remove Agents clicked')
+        },
+        {
+          text: 'Add Runbook',
+          icon: 'document-attach-outline',
+          handler: () => console.log('Add Runbook clicked')
+        },
+        {
+          text: 'Remove Runbook',
+          icon: 'document-attach-outline',
+          handler: () => console.log('Remove Runbook clicked')
+        },
+        {
+          text: 'Add Vendors',
+          icon: 'briefcase-outline',
+          handler: () => console.log('Add Vendors clicked')
+        },
+        {
+          text: 'Remove Vendors',
+          icon: 'briefcase-outline', // fallback, or use custom CSS to add strike-through or red color
+          cssClass: 'destructive-vendor',
+          handler: () => console.log('Remove Vendors clicked')
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel'
+        }
+      ]
+    });
+
+    await actionSheet.present();
+  }
+
+  async onAddAction() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Choose an option',
+      cssClass: 'custom-action-sheet',
+      buttons: [
+        {
+          text: 'Camera',
+          icon: 'camera',
+          handler: () => {
+            this.openCamera();
+          },
+        },
+        {
+          text: 'Photos',
+          icon: 'image',
+          handler: () => {
+            this.openPhotos();
+          },
+        },
+        {
+          text: 'Files',
+          icon: 'document',
+          handler: () => {
+            this.openFiles();
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await actionSheet.present();
+  }
+
+  openCamera() {
+    console.log('Camera option selected');
+    // Add logic to open camera here
+  }
+
+  openPhotos() {
+    console.log('Photos option selected');
+    // Add logic to open gallery
+  }
+
+  openFiles() {
+    console.log('Files option selected');
+    // Add logic to pick files
+  }
+
 }

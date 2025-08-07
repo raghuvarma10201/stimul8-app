@@ -5,7 +5,19 @@
       <ion-back-button defaultHref="/channels"></ion-back-button>
     </ion-buttons>
     <ion-title>{{ selectedChannel.name }}</ion-title>
-    <small>{{ selectedChannel.description }}</small>
+    <!-- <small>{{ selectedChannel.description }}</small> -->
+
+    <!-- Info Icon -->
+    <ion-buttons slot="end">
+      <ion-button (click)="openDescriptionModal()" class="info-icon">
+        <ion-icon name="information-circle-outline"></ion-icon>
+      </ion-button>
+
+      <!-- More Icon -->
+      <ion-button (click)="openActionSheet()" class="more-icon">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content class="chat-content">
@@ -90,15 +102,52 @@
   </div>
 </ion-content>
 
+
+
 <ion-footer>
   <ion-toolbar>
-    <ion-item lines="none">
-      <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
-        <ion-input placeholder="Type a message..." formControlName="message" (ionChange)="onInputChange()"></ion-input>
-        <ion-button slot="end" color="primary" [disabled]="isButtonDisabled" type="submit">
+    <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+      <ion-item lines="none" class="chat-input-row">
+        <!-- Plus Icon -->
+        <ion-icon name="add" slot="start" class="chat-plus-icon" (click)="onAddAction()"></ion-icon>
+
+        <!-- Input -->
+        <ion-input
+          placeholder="Type a message..."
+          formControlName="message"
+          (ionChange)="onInputChange()"
+          class="chat-message-input">
+        </ion-input>
+
+        <!-- Send Icon -->
+        <ion-button
+          slot="end"
+          fill="clear"
+          class="chat-send-button"
+          [disabled]="isButtonDisabled"
+          type="submit">
           <ion-icon name="send"></ion-icon>
         </ion-button>
-      </form>
-    </ion-item>
+      </ion-item>
+    </form>
   </ion-toolbar>
 </ion-footer>
+
+
+<ion-modal [isOpen]="isDescriptionModalOpen" (didDismiss)="isDescriptionModalOpen = false" class="custom-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Channel Info</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="isDescriptionModalOpen = false"><ion-icon name="close-outline"></ion-icon></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <h3>{{ selectedChannel.name }}</h3>
+      <p>{{ selectedChannel.description }}</p>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
