@@ -780,8 +780,56 @@ export class ChatPage implements OnInit {
     await actionSheet.present();
   }
 
-  onAddAction(){
-    console.log('Add clicked');
+  async onAddAction() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Choose an option',
+      cssClass: 'custom-action-sheet',
+      buttons: [
+        {
+          text: 'Camera',
+          icon: 'camera',
+          handler: () => {
+            this.openCamera();
+          },
+        },
+        {
+          text: 'Photos',
+          icon: 'image',
+          handler: () => {
+            this.openPhotos();
+          },
+        },
+        {
+          text: 'Files',
+          icon: 'document',
+          handler: () => {
+            this.openFiles();
+          },
+        },
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+        },
+      ],
+    });
+
+    await actionSheet.present();
+  }
+
+  openCamera() {
+    console.log('Camera option selected');
+    // Add logic to open camera here
+  }
+
+  openPhotos() {
+    console.log('Photos option selected');
+    // Add logic to open gallery
+  }
+
+  openFiles() {
+    console.log('Files option selected');
+    // Add logic to pick files
   }
 
 }
