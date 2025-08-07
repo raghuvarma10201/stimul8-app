@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs';
 import { CommonService } from 'src/app/services/common.service';
 import { ErrorHandlingService } from 'src/app/services/error-handling.service';
@@ -13,7 +14,7 @@ export class ChannelsPage implements OnInit {
 
   groupedChannels: any[] = [];
   loading = false;
-constructor( private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService ) { }
+  constructor(private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, public router: Router) { }
 
   ngOnInit() {
     this.getAllChannels();
@@ -60,6 +61,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
   }
   goToChannel(channel: any) {
     console.log('Navigating to channel:', channel);
+    this.router.navigate(['/chat'], { state: { channelId: channel.id } });
     // Example: this.router.navigate(['/channel-detail', channel.id]);
   }
 
@@ -68,6 +70,6 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
     // Example: Navigate to channel creation page
     // this.router.navigate(['/create-channel']);
   }
-  
+
 
 }

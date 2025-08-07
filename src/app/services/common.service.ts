@@ -45,6 +45,38 @@ export class CommonService {
       )
       .pipe(catchError(this.handleError));
   }
+  addMessage(message: ChatMessage, currentMessages: ChatMessage[]): void {
+    const updatedMessages = [...currentMessages, message];
+    this.messagesSubject.next(updatedMessages);
+  }
+  getDataByEntityId(entityUrl: string, entityId: any): Observable<any> {
+    return this.http
+      .get<any>(environment.apiUrl + entityUrl + '/' + entityId)
+      .pipe(catchError(this.handleError));
+  }
+  sendUserMessage(channelID: any, data: any): Observable<any> {
+    return this.http
+      .post<any>(
+        environment.messagesUrl +
+          'channels/' +
+          channelID +
+          '/message-without-attachment',
+        data
+      )
+      .pipe(catchError(this.handleError));
+  }
+
+  sendUserMessageWithAttachment(channelID: any, data: any): Observable<any> {
+    return this.http
+      .post<any>(
+        environment.messagesUrl +
+          'channels/' +
+          channelID +
+          '/message-with-attachment',
+        data
+      )
+      .pipe(catchError(this.handleError));
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }

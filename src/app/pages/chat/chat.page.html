@@ -1,35 +1,42 @@
+
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/channels"></ion-back-button>
+    </ion-buttons>
     <ion-title>{{ selectedChannel.name }}</ion-title>
-    
+    <small>{{ selectedChannel.description }}</small>
   </ion-toolbar>
 </ion-header>
-
 <ion-content class="chat-content">
-  <div *ngFor="let group of groupedChannels" [class.channel-group]="group.length > 0">
-      <div *ngFor="let channel of group" class="channel" (click)="channelHandler(channel.id!)"
-        [class.active]="selectedChannel.id === channel.id">
-        <h3>{{ channel.name }}</h3>
+
+  <div *ngFor="let message of chatMessages; let i = index">
+    <div *ngIf="message.sender === 'user'"  class="msg-row-own" >
+      <div class="msg-bubble">
+        <!-- <div class="msg-author">{{ message.author }}</div> -->
+        <div class="msg-text">{{ message.text }}</div>
+        <div class="msg-time">
+          {{ message.timestamp | date:'shortTime' }} <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        </div>
       </div>
     </div>
-  <div *ngFor="let msg of messages">
-    <div [ngClass]="{'msg-row-own': msg.own, 'msg-row-other': !msg.own}">
-      <ion-avatar *ngIf="!msg.own" slot="start">
-        <img [src]="msg.avatar" />
-      </ion-avatar>
+    <div *ngIf="message.sender === 'bot'"  class="msg-row-other" >
       <div class="msg-bubble">
-        <div class="msg-author">{{ msg.author }}</div>
-        <div class="msg-text">{{ msg.content }}</div>
-        <div class="msg-time">
-          {{ msg.time }} <ion-icon name="checkmark-done-circle-outline"></ion-icon>
+        <!-- <div class="msg-author">{{ message.author }}</div> -->
+        <div class="msg-text">
+          <span  class="currentMessage" *ngIf="displayedResponse && message === currentMessage" [attr.data-value]="displayedResponse">
+            {{displayedResponse}}
+          </span>
+
+          <div>
+            <span *ngIf="!displayedResponse || message !== currentMessage"
+              [attr.data-value]="message.text?.toString() || ''">{{message.text?.toString()}}</span>
+          </div>
         </div>
-        <div *ngIf="msg.error" class="msg-error">
-          {{ msg.error }}
+        <div class="msg-time">
+          {{ message.timestamp | date:'shortTime' }} <ion-icon name="checkmark-done-circle-outline"></ion-icon>
         </div>
       </div>
-      <ion-avatar *ngIf="msg.own" slot="end">
-        <img [src]="msg.avatar" />
-      </ion-avatar>
     </div>
   </div>
 </ion-content>
@@ -37,10 +44,12 @@
 <ion-footer>
   <ion-toolbar>
     <ion-item lines="none">
-      <ion-input placeholder="Type a message..." [(ngModel)]="newMessage"></ion-input>
-      <ion-button slot="end" color="primary" (click)="sendMessage()">
-        <ion-icon name="send"></ion-icon>
-      </ion-button>
+      <form [formGroup]="chatForm" (ngSubmit)="sendMessage()">
+        <ion-input placeholder="Type a message..." formControlName="message" (ionChange)="onInputChange()"></ion-input>
+        <ion-button slot="end" color="primary" [disabled]="isButtonDisabled" type="submit">
+          <ion-icon name="send"></ion-icon>
+        </ion-button>
+      </form>
     </ion-item>
   </ion-toolbar>
 </ion-footer>
