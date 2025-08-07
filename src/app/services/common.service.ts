@@ -77,6 +77,12 @@ export class CommonService {
       )
       .pipe(catchError(this.handleError));
   }
+
+  createEntity(entityType: string, entityData: any): Observable<any> {
+    return this.http
+      .post<any>(environment.apiUrl + entityType + 's', entityData, { headers: this.headers })
+      .pipe(catchError(this.handleError));
+  }
   handleError(error: HttpErrorResponse) {
     return throwError(error);
   }
