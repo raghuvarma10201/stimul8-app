@@ -1,0 +1,23 @@
+{
+  "Application/System": ["Azure Active Directory", "Office 365", "Salesforce"],
+  "IAM Solution": ["BeyondTrust Password Safe", "Okta", "Tuebora"],
+  "IAM Process": [
+    "Access Controls",
+    "Access Requests",
+    "Access Reviews",
+    "Application on-boarding",
+    "Authentication Policy",
+    "Birthright Access Policy Mining",
+    "Credentials Management",
+    "Data Management",
+    "Data Reconciliation",
+    "Data Synchronization",
+    "Entitlement Enrichment",
+    "Joiner-Mover-Leaver",
+    "Password Policy",
+    "Privileged Access Management",
+    "Reporting",
+    "SSO"
+  ],
+  "IAM Initiative": [""]
+}

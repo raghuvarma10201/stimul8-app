@@ -12,7 +12,7 @@ export class HomePage {
   menuItems = [
     {
       label: 'Channels',
-      route: '/channel',
+      route: '/channels',
       icon: 'assets/images/icons/channels.gif'
      
     },

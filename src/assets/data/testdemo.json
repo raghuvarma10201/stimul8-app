@@ -1,0 +1,725 @@
+{
+  "allresponse": [
+    {
+      "message": "Show me the full tabular view",
+      "type": "tabbed-view",
+      "response": {
+        "heading": "Tabbed view",
+        "text": "here is a tabbed view you asked for",
+        "navigation": {
+          "position": "top",
+          "items": [
+            {
+              "label": "Metadata",
+              "target": "#metadata"
+            },
+            {
+              "label": "Applications",
+              "target": "#applications"
+            },
+            {
+              "label": "Activities",
+              "target": "#activities"
+            },
+            {
+              "label": "Analysis",
+              "target": "#analysis"
+            }
+          ]
+        },
+        "layout": [
+          {
+            "header": "Metadata",
+            "id": "metadata",
+            "type": "attribute-value",
+            "columnLayout": "optimal",
+            "dataSource": "https://api.example.com/user/metadata",
+            "attributes": [
+              {
+                "attribute-header": "Basic Information",
+                "attributes": [
+                  {
+                    "attributeDisplayName": "First Name",
+                    "attributeName": "firstName",
+                    "value": "John"
+                  },
+                  {
+                    "attributeDisplayName": "Last Name",
+                    "attributeName": "lastName",
+                    "value": "Doe"
+                  },
+                  {
+                    "attributeDisplayName": "Email",
+                    "attributeName": "emailAddress",
+                    "value": "john.doe@example.com"
+                  },
+                  {
+                    "attributeDisplayName": "EmployeeID",
+                    "attributeName": "employeeId",
+                    "value": "EMP12345"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "header": "Applications",
+            "id": "applications",
+            "type": "grid-view",
+            "dataSource": "https://api.example.com/user/applications",
+            "columns": [
+              {
+                "attributeName": "applicationName",
+                "displayLabel": "Application"
+              },
+              {
+                "attributeName": "accessGrantedDate",
+                "displayLabel": "Access Granted Date"
+              },
+              {
+                "attributeName": "role",
+                "displayLabel": "Role"
+              }
+            ],
+            "data": [
+              {
+                "applicationName": "Google Drive",
+                "accessGrantedDate": "2023-05-20",
+                "role": "Editor"
+              },
+              {
+                "applicationName": "Slack",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              },
+              {
+                "applicationName": "Teams",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              }
+            ]
+          },
+          {
+            "header": "Analysis",
+            "id": "analysis",
+            "type": "charts",
+            "dataSource": "https://api.example.com/user/activity-trends",
+            "chartType": "bar",
+            "chartTitle": "Activity Trend (Last Year)",
+            "chartDataField": [
+              {
+                "Month": "Jan",
+                "value": 10
+              },
+              {
+                "Month": "Feb",
+                "value": 15
+              },
+              {
+                "Month": "Mar",
+                "value": 59
+              },
+              {
+                "Month": "Apr",
+                "value": 23
+              },
+              {
+                "Month": "May",
+                "value": 88
+              },
+              {
+                "Month": "Jun",
+                "value": 40
+              },
+              {
+                "Month": "Jul",
+                "value": 2
+              }
+            ]
+          },
+          {
+            "header": "Activities",
+            "id": "activities",
+            "type": "charts-and-grid",
+            "charts": {
+              "layout": "optimal",
+              "charts": [
+                {
+                  "dataSource": "https://api.example.com/user/activity-trends",
+                  "chartType": "line",
+                  "chartTitle": "Activity Trend (Last Year)",
+                  "chartDataField": [
+                    {
+                      "date": "2023-01",
+                      "value": 10
+                    },
+                    {
+                      "date": "2023-02",
+                      "value": 15
+                    },
+                    {
+                      "date": "2023-03",
+                      "value": 20
+                    }
+                  ]
+                },
+                {
+                  "dataSource": "https://api.example.com/user/activity-distribution",
+                  "chartType": "pie",
+                  "chartTitle": "Activity Distribution by Application",
+                  "chartDataField": [
+                    {
+                      "name": "Google Drive",
+                      "value": 40
+                    },
+                    {
+                      "name": "Slack",
+                      "value": 60
+                    }
+                  ]
+                }
+              ]
+            },
+            "grid-view": {
+              "dataSource": "https://api.example.com/user/activity-details",
+              "columns": [
+                {
+                  "attributeName": "activityDate",
+                  "displayLabel": "Date"
+                },
+                {
+                  "attributeName": "activityType",
+                  "displayLabel": "Activity Type"
+                },
+                {
+                  "attributeName": "applicationName",
+                  "displayLabel": "Application"
+                }
+              ],
+              "data": [
+                {
+                  "activityDate": "2024-02-10",
+                  "activityType": "Login",
+                  "applicationName": "Google Drive"
+                },
+                {
+                  "activityDate": "2024-02-11",
+                  "activityType": "File Upload",
+                  "applicationName": "Slack"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "message": "Show me only charts",
+      "type": "tabbed-view",
+      "response": {
+        "navigation": {
+          "position": "left",
+          "items": [
+            {
+              "label": "Analysis",
+              "target": "#analysis"
+            }
+          ]
+        },
+        "layout": [
+          {
+            "header": "Analysis",
+            "id": "analysis",
+            "type": "charts",
+            "dataSource": "https://api.example.com/user/activity-trends",
+            "chartType": "bar",
+            "chartTitle": "Activity Trend (Last Year)",
+            "chartDataField": [
+              {
+                "Month": "Jan",
+                "value": 10
+              },
+              {
+                "Month": "Feb",
+                "value": 15
+              },
+              {
+                "Month": "Mar",
+                "value": 59
+              },
+              {
+                "Month": "Apr",
+                "value": 23
+              },
+              {
+                "Month": "May",
+                "value": 88
+              },
+              {
+                "Month": "Jun",
+                "value": 40
+              },
+              {
+                "Month": "Jul",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "message": "Show me attributes and Grid",
+      "type": "tabbed-view",
+      "response": {
+        "navigation": {
+          "position": "right",
+          "items": [
+            {
+              "label": "Metadata",
+              "target": "#metadata"
+            },
+            {
+              "label": "Applications",
+              "target": "#applications"
+            }
+          ]
+        },
+        "layout": [
+          {
+            "header": "Metadata",
+            "id": "metadata",
+            "type": "attribute-value",
+            "columnLayout": "optimal",
+            "dataSource": "https://api.example.com/user/metadata",
+            "attributes": [
+              {
+                "attribute-header": "Basic Information",
+                "attributes": [
+                  {
+                    "attributeDisplayName": "First Name",
+                    "attributeName": "firstName",
+                    "value": "John"
+                  },
+                  {
+                    "attributeDisplayName": "Last Name",
+                    "attributeName": "lastName",
+                    "value": "Doe"
+                  },
+                  {
+                    "attributeDisplayName": "Email",
+                    "attributeName": "emailAddress",
+                    "value": "john.doe@example.com"
+                  },
+                  {
+                    "attributeDisplayName": "EmployeeID",
+                    "attributeName": "employeeId",
+                    "value": "EMP12345"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "header": "Applications",
+            "id": "applications",
+            "type": "grid-view",
+            "dataSource": "https://api.example.com/user/applications",
+            "columns": [
+              {
+                "attributeName": "applicationName",
+                "displayLabel": "Application"
+              },
+              {
+                "attributeName": "accessGrantedDate",
+                "displayLabel": "Access Granted Date"
+              },
+              {
+                "attributeName": "role",
+                "displayLabel": "Role"
+              }
+            ],
+            "data": [
+              {
+                "applicationName": "Google Drive",
+                "accessGrantedDate": "2023-05-20",
+                "role": "Editor"
+              },
+              {
+                "applicationName": "Slack",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              },
+              {
+                "applicationName": "Teams",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "message": "Show me attributes atribute in 2 column",
+      "type": "tabbed-view",
+      "response": {
+        "navigation": {
+          "position": "top",
+          "items": [
+            {
+              "label": "Metadata",
+              "target": "#metadata"
+            }
+          ]
+        },
+        "layout": [
+          {
+            "header": "Metadata",
+            "id": "metadata",
+            "type": "attribute-value",
+            "columnLayout": "2",
+            "dataSource": "https://api.example.com/user/metadata",
+            "attributes": [
+              {
+                "attribute-header": "Basic Information",
+                "attributes": [
+                  {
+                    "attributeDisplayName": "First Name",
+                    "attributeName": "firstName",
+                    "value": "John"
+                  },
+                  {
+                    "attributeDisplayName": "Last Name",
+                    "attributeName": "lastName",
+                    "value": "Doe"
+                  },
+                  {
+                    "attributeDisplayName": "Email",
+                    "attributeName": "emailAddress",
+                    "value": "john.doe@example.com"
+                  },
+                  {
+                    "attributeDisplayName": "EmployeeID",
+                    "attributeName": "employeeId",
+                    "value": "EMP12345"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "message": "Show me grid view",
+      "type": "tabbed-view",
+      "response": {
+        "navigation": {
+          "position": "top",
+          "items": [
+            {
+              "label": "Applications",
+              "target": "#applications"
+            }
+          ]
+        },
+        "layout": [
+          {
+            "header": "Applications",
+            "id": "applications",
+            "type": "grid-view",
+            "dataSource": "https://api.example.com/user/applications",
+            "columns": [
+              {
+                "attributeName": "applicationName",
+                "displayLabel": "Application"
+              },
+              {
+                "attributeName": "accessGrantedDate",
+                "displayLabel": "Access Granted Date"
+              },
+              {
+                "attributeName": "role",
+                "displayLabel": "Role"
+              }
+            ],
+            "data": [
+              {
+                "applicationName": "Google Drive",
+                "accessGrantedDate": "2023-05-20",
+                "role": "Editor"
+              },
+              {
+                "applicationName": "Slack",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              },
+              {
+                "applicationName": "Teams",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "message": "Grid and chart",
+      "type": "tabbed-view",
+      "response": {
+        "navigation": {
+          "position": "left",
+          "items": [
+            {
+              "label": "Applications",
+              "target": "#applications"
+            },
+            {
+              "label": "Analysis",
+              "target": "#analysis"
+            }
+          ]
+        },
+        "layout": [
+          {
+            "header": "Applications",
+            "id": "applications",
+            "type": "grid-view",
+            "dataSource": "https://api.example.com/user/applications",
+            "columns": [
+              {
+                "attributeName": "applicationName",
+                "displayLabel": "Application"
+              },
+              {
+                "attributeName": "accessGrantedDate",
+                "displayLabel": "Access Granted Date"
+              },
+              {
+                "attributeName": "role",
+                "displayLabel": "Role"
+              }
+            ],
+            "data": [
+              {
+                "applicationName": "Google Drive",
+                "accessGrantedDate": "2023-05-20",
+                "role": "Editor"
+              },
+              {
+                "applicationName": "Slack",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              },
+              {
+                "applicationName": "Teams",
+                "accessGrantedDate": "2023-06-15",
+                "role": "Admin"
+              }
+            ]
+          },
+          {
+            "header": "Analysis",
+            "id": "analysis",
+            "type": "charts",
+            "dataSource": "https://api.example.com/user/activity-trends",
+            "chartType": "doughnut",
+            "chartTitle": "Activity Trend (Last Year)",
+            "chartDataField": [
+              {
+                "Month": "Jan",
+                "value": 10
+              },
+              {
+                "Month": "Feb",
+                "value": 15
+              },
+              {
+                "Month": "Mar",
+                "value": 59
+              },
+              {
+                "Month": "Apr",
+                "value": 23
+              },
+              {
+                "Month": "May",
+                "value": 88
+              },
+              {
+                "Month": "Jun",
+                "value": 40
+              },
+              {
+                "Month": "Jul",
+                "value": 2
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "message": "Chart response without tab",
+      "type": "graph",
+      "response": {
+        "chartId": "activity-trend",
+        "header": "Analysis",
+        "chartType": "bar",
+        "chartTitle": "Activity Trend (Last Year)",
+        "chartDataField": [
+          {
+            "Month": "Jan",
+            "value": 10
+          },
+          {
+            "Month": "Feb",
+            "value": 15
+          },
+          {
+            "Month": "Mar",
+            "value": 59
+          },
+          {
+            "Month": "Apr",
+            "value": 23
+          },
+          {
+            "Month": "May",
+            "value": 88
+          },
+          {
+            "Month": "Jun",
+            "value": 40
+          },
+          {
+            "Month": "Jul",
+            "value": 2
+          }
+        ]
+      }
+    },
+    {
+      "message": "javascript",
+      "type": "code",
+      "response": {
+        "heading": "Javasript sample code",
+        "text": "Here is a sample code you asked for",
+        "code": "function hello() {\n  console.log(\"Hello, World!\");\n}",
+        "language": "javascript"
+      }
+    },
+    {
+      "message": "sql",
+      "type": "code",
+      "response": {
+        "code": "SELECT * FROM products \n WHERE category = 'Electronics' \n ORDER BY price ASC \n LIMIT 10 OFFSET 20;",
+        "language": "sql"
+      }
+    },
+    {
+      "message": "html",
+      "type": "code",
+      "response": {
+        "code": "<!DOCTYPE html> \n <html lang='en'> \n <head> \n    <meta charset='UTF-8'>\n    <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n    <title>Download File</title>\n</head>\n<body>\n   <h2>Click the link below to download the file:</h2>\n    <a href='example.pdf' download='MyFile.pdf'>Download PDF</a>\n</body>\n</html>\n",
+        "language": "sql"
+      }
+    },
+    {
+      "message": "show html view",
+      "type": "html",
+      "response": "<h2 style=\"color:blue;\">Hello, Angular!</h2> <p>This is dynamically rendered HTML.</p> <br/> <a target=\"_blank\" href=\"https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf\" download=\"dummy.pdf\">Download PDF</a>"
+    },
+    {
+      "message": "show database connection",
+      "type": "form",
+      "operationType": "add",
+      "appID": "23eeee0e-6c6b-44e6-9554-dbf1f135a3d0",
+      "response": {
+        "heading": "Database Connection",
+        "fields": [
+          {
+            "name": "connection_url",
+            "type": "text",
+            "displayLabel": "Enter Connection URL",
+            "defaultValue": "mysql://"
+          },
+          {
+            "name": "host",
+            "type": "text",
+            "displayLabel": "Enter Host Name",
+            "defaultValue": "localhost"
+          },
+          {
+            "name": "port",
+            "type": "number",
+            "displayLabel": "Enter Port",
+            "defaultValue": 3306
+          },
+          {
+            "name": "database",
+            "type": "text",
+            "displayLabel": "Enter Database Name / SID",
+            "defaultValue": "somedatabase"
+          },
+          {
+            "name": "username",
+            "type": "text",
+            "displayLabel": "Enter Username",
+            "defaultValue": "someuser"
+          },
+          {
+            "name": "password",
+            "type": "password",
+            "displayLabel": "Enter Password",
+            "defaultValue": "somepassword"
+          }
+        ]
+      }
+    },
+    {
+      "message": "Add Channel",
+      "response": {
+        "status": "success",
+        "type": "form",
+        "response": "",
+        "data": {
+          "entity_type": "channel",
+          "entity_name": "Channel",
+          "operation": "create"
+        }
+      }
+    },
+    {
+      "message": "Add Application",
+      "response": {
+        "status": "success",
+        "type": "form",
+        "response": "",
+        "data": {
+          "entity_type": "application",
+          "entity_name": "Application",
+          "operation": "create"
+        }
+      }
+    }
+  ],
+  "allstrings": [
+    "Show me the full tabular view",
+    "Show me only charts",
+    "Show me attributes and Grid",
+    "Show me attributes atribute in 2 column",
+    "Show me grid view",
+    "Grid and chart",
+    "Chart response without tab",
+    "javascript",
+    "sql",
+    "html",
+    "show html view",
+    "show database connection",
+    "Add Channel",
+    "Add Application"
+  ]
+}

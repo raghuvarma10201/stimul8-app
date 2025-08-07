@@ -1,8 +1,10 @@
-
 export const environment = {
-  apiUrl:"https://rpwebapps.us/clients/stimul8/api/",
-  imgUrl:"https://rpwebapps.us/clients/stimul8/",
-  perPageRecordCount : 10,
-  production: false
+  apiUrl: '/metadataurl/', // Now proxied
+  messagesUrl: '/messagesurl/',
+  channelsurl: '/channelsurl/',
+  summaryurl:'/summaryurl/',
+  production: false,
+  sessionTimeout: 7200000,
+  offcanvaspageSize: 6,
 };
 

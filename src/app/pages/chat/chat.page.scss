@@ -1,0 +1,55 @@
+.chat-content {
+  background: #f9f9fc;
+  padding: 16px 0 60px 0;
+  .msg-row-own, .msg-row-other {
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 10px;
+  }
+  .msg-row-own   { flex-direction: row-reverse; }
+  .msg-row-other { flex-direction: row; }
+
+  .msg-bubble {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 12px 15px;
+    max-width: 65vw;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.05);
+    margin: 0 10px;
+    font-size: 15px;
+    position: relative;
+  }
+  .msg-author {
+    font-weight: bold;
+    color: #57617b;
+    margin-bottom: 3px;
+    font-size: 13px;
+  }
+  .msg-text { margin-bottom: 6px; }
+  .msg-time {
+    font-size: 12px;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+  }
+  .msg-error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 4px;
+  }
+}
+ion-footer {
+  ion-toolbar {
+    ion-item {
+      --border-width: 0;
+    }
+    ion-input {
+      flex: 1;
+      font-size: 15px;
+      --padding-start: 8px;
+    }
+    ion-button {
+      margin-left: 8px;
+    }
+  }
+}
