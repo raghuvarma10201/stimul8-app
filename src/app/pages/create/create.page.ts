@@ -18,7 +18,7 @@ export class CreatePage implements OnInit {
   constructor(private route: ActivatedRoute, private fb: FormBuilder, private commonService: CommonService, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, private router: Router) {}
 
   ngOnInit() {
-    this.entityType = this.route.snapshot.paramMap.get('entity') || 'Channel';
+    this.entityType = this.route.snapshot.paramMap.get('entity') || 'channel';
     this.initForm();
   }
 

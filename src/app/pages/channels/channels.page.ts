@@ -15,12 +15,14 @@ export class ChannelsPage implements OnInit {
   groupedChannels: any[] = [];
   loading = false;
   welcomeMessageList: any[] = [];
-constructor( private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, private router: Router ) { }
+  constructor(private commonService: CommonService, private cdr: ChangeDetectorRef, private errorHandlingService: ErrorHandlingService, private loader: LoaderService, private router: Router) { }
 
   ngOnInit() {
+
+  }
+  async ionViewDidEnter() {
     this.getAllChannels();
   }
-
   getAllChannels() {
     this.loading = true; // Set loading flag
     this.loader.loadingPresent();
@@ -34,6 +36,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
       .subscribe({
         next: (response: any) => {
           //response.data = [];
+          console.log(response);
           if (response.data?.length > 0) {
             this.groupedChannels = response.data
               .map((group: any[], index: number) => {
@@ -50,7 +53,6 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
               .filter(Boolean); // Remove null entries (i.e., empty groups)
           } else {
             this.groupedChannels = [];
-            this.getWelcomeMessageData();
           }
           this.cdr.detectChanges();
         },
@@ -73,7 +75,7 @@ constructor( private commonService: CommonService, private cdr: ChangeDetectorRe
         next: (response: any) => {
           if (response?.length > 0) {
             this.welcomeMessageList = response;
-           
+
             this.cdr.detectChanges();
           }
         },

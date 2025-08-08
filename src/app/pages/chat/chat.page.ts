@@ -207,28 +207,31 @@ export class ChatPage implements OnInit {
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
     private authService: AuthService,
-   
+
     private modalCtrl: ModalController
   ) {
     this.chatForm = this.fb.group({
       message: [""],
     });
+    this.chatMessages = [];
+    this.welcomeMessageList = [];
+    this.loading = true;
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       const channelId = navigation.extras.state["channelId"];
       this.channelId = channelId;
       console.log("channelId", channelId);
-      this.chatMessages = [];
+
     }
   }
 
   ngOnInit() {
     this.chatMessages = [];
   }
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     // Use takeUntil for all subscriptions
     this.chatMessages = [];
-    this.channelHandler(this.channelId);
+    await this.channelHandler(this.channelId);
     this.loadSelectedNameOptions();
 
     this.commonService.messages$.pipe(takeUntil(this.destroy$)).subscribe({
@@ -286,14 +289,16 @@ export class ChatPage implements OnInit {
 
     if (!hasContent) return;
 
-    const formData = new FormData();
-    formData.append("message", message || "");
+    // const formData = new FormData();
+    // formData.append("message", message || "");
 
-    // Append files to formData
-    this.uploadedFiles.forEach((uploadedFile) => {
-      formData.append("files", uploadedFile.file);
-    });
-
+    // // Append files to formData
+    // this.uploadedFiles.forEach((uploadedFile) => {
+    //   formData.append("files", uploadedFile.file);
+    // });
+    const formData = {
+      message: message
+    }
     // Push user message to chat immediately
     const userMessage: ChatMessage = {
       text: message,
@@ -323,11 +328,11 @@ export class ChatPage implements OnInit {
       },
     };
 
-    this.loaderService.loadingPresent();
 
     if (this.checkInput(message)) {
       this.handleStaticResponse(message, botMessage);
     } else {
+      this.loaderService.loadingPresent();
       this.handleApiResponse(formData, botMessage);
     }
 
@@ -379,7 +384,8 @@ export class ChatPage implements OnInit {
     this.isResponseAction = true;
   }
 
-  private handleApiResponse(formData: FormData, botMessage: BotMessage): void {
+  private handleApiResponse(formData: any, botMessage: BotMessage): void {
+
     const apiCall =
       this.uploadedFiles.length > 0
         ? this.commonService.sendUserMessageWithAttachment(
@@ -387,7 +393,7 @@ export class ChatPage implements OnInit {
           formData
         )
         : this.commonService.sendUserMessage(this.selectedChannel.id, formData);
-
+    //this.loaderService.loadingPresent();
     apiCall
       .pipe(
         takeUntil(this.destroy$),
@@ -400,10 +406,11 @@ export class ChatPage implements OnInit {
           return EMPTY;
         }),
         finalize(() => {
-          this.loaderService.loadingDismiss();
+this.loaderService.loadingDismiss();
         })
       )
       .subscribe((response) => {
+        
         this.handleApiResponseType(response, botMessage);
       });
   }
@@ -445,6 +452,7 @@ export class ChatPage implements OnInit {
   }
 
   typingAnimation(responseText: string): void {
+    
     let currentText = "";
     let index = 0;
 
@@ -470,6 +478,7 @@ export class ChatPage implements OnInit {
       }
     }
     this.isButtonDisabled = false;
+    
   }
 
   sleep(ms: number) {
@@ -638,12 +647,11 @@ export class ChatPage implements OnInit {
 
   async fetchWelcomeMessagesList() {
     this.loading = true;
-    await this.loaderService.loadingPresent();
     this.commonService
       .getWelcomeMessage()
       .pipe(
         finalize(() => {
-          this.loaderService.loadingDismiss();
+          this.loaderService.loadingDismiss();    
         })
       )
       .subscribe(
@@ -669,11 +677,11 @@ export class ChatPage implements OnInit {
       );
   }
   channelHandler(channelId: string): void {
+    console.log(channelId);
     channelId = this.channelId;
-    this.loaderService.loadingPresent();
     this.loading = true;
     if (!channelId) {
-      this.loaderService.loadingDismiss();
+      //this.loaderService.loadingDismiss();
       this.loading = false;
       return;
     }
@@ -682,6 +690,7 @@ export class ChatPage implements OnInit {
 
     this.isChannelAction = true;
     this.isResponseAction = false;
+    this.loaderService.loadingPresent();
     this.getChannelInfo(channelId).subscribe({
       next: (data: ChannelResponse) => {
         console.log(data);
@@ -696,12 +705,12 @@ export class ChatPage implements OnInit {
           .pipe(
             takeUntil(this.destroy$),
             finalize(() => {
-
+              
               this.cdr.detectChanges();
             })).subscribe({
               next: (res: any) => {
                 if (res.data.length > 0) {
-                  this.loaderService.loadingDismiss();
+
                   console.log(res);
                   res.data.forEach((obj: ChannelHistoryResponse) => {
                     const { response, request, id, feedback } = obj;
@@ -730,6 +739,7 @@ export class ChatPage implements OnInit {
                       });
                     }
                   });
+                  this.loaderService.loadingDismiss();
                   this.cdr.detectChanges();
                   setTimeout(() => this.scrollToBottom(true), 0);
                   this.isResponseAction = true;
@@ -767,7 +777,6 @@ export class ChatPage implements OnInit {
    * @returns Observable with channel data
    */
   getChannelInfo(channelId: string) {
-    this.loaderService.loadingDismiss();
     return this.commonService.getChannelById(channelId);
   }
 
@@ -792,8 +801,8 @@ export class ChatPage implements OnInit {
    * @param forceScroll - Whether to force scroll regardless of current position
    */
   scrollToBottom(forceScroll = false): void {
-    this.cdr.detectChanges();
-    this.loaderService.loadingDismiss();
+    //this.cdr.detectChanges();
+    
     this.content.scrollToBottom(10); // 300ms animation
   }
   navigateToDisplayPage(nocId: any) {

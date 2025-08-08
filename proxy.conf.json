@@ -1,0 +1,8 @@
+{
+  "/": {
+    "target": "https://rpw.stimul8.ai",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

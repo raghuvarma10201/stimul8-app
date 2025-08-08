@@ -1,10 +1,8 @@
+
 export const environment = {
-  apiUrl: '/metadataurl/', // Now proxied
-  messagesUrl: '/messagesurl/',
-  channelsurl: '/channelsurl/',
-  summaryurl:'/summaryurl/',
-  production: false,
-  sessionTimeout: 7200000,
-  offcanvaspageSize: 6,
+  apiUrl:"https://rpw.stimul8.ai",
+  imgUrl:"https://rpw.stimul8.ai",
+  perPageRecordCount : 10,
+  production: false
 };
 

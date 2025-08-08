@@ -31,8 +31,8 @@ export class LoginPage implements OnInit {
   intervalId: any;
   
   /** ***** For Demo-Only Credentials ***** */
-  DEMO_USERNAME = 'john.smith@askiam.ai';
-  DEMO_PASSWORD = '2Few-Chur-Awf-1AM';
+  DEMO_USERNAME = 'john@askiam.ai';
+  DEMO_PASSWORD = '123456';
   /** ******************************** */
 
   constructor(
@@ -139,12 +139,14 @@ export class LoginPage implements OnInit {
     this.submitted = false;
     const userData = formData;
     // this.toastService.showSuccess('Successfully Login', 'Success');
+    
     this.authService.setUserInLocalStorage(userData, 'userData');
     let token = 'assffgdsrewrr_erewrewxqw_qrewtr';
     console.log("token---", token);
     localStorage.setItem('token', token);
     this.loginForm.reset();
     this.refreshCaptcha();
+    this.loaderService.loadingDismiss();
     this.router.navigate(["/home"]);
     this.sharedService.isUserLogin.next({ isUserLoggedIn: true });
   }

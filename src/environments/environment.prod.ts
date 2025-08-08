@@ -1,6 +1,8 @@
+
 export const environment = {
-  apiUrl:"https://rpwebapps.us/clients/stimul8/api/",
-  imgUrl:"https://rpwebapps.us/clients/stimul8/",
+  apiUrl:"https://rpw.stimul8.ai",
+  imgUrl:"https://rpw.stimul8.ai",
   perPageRecordCount : 10,
   production: true
 };
+
